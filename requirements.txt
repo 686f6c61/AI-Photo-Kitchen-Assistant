@@ -1,0 +1,11 @@
+flask
+openai
+python-dotenv
+requests
+Werkzeug
+blinker
+click
+itsdangerous
+Jinja2
+MarkupSafe
+urllib3
