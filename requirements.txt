@@ -1,0 +1,29 @@
+# AI Photo Kitchen Assistant - Dependencies
+# Author: 686f6c61 (https://github.com/686f6c61)
+# Updated: 2025-01-24
+# License: MIT
+
+# Core Framework
+flask>=3.0.0
+python-dotenv>=1.0.0
+
+# API Clients
+openai>=1.12.0
+requests>=2.31.0
+
+# Security & Utils
+Werkzeug>=3.0.0
+flask-limiter>=3.5.0
+flask-cors>=4.0.0
+
+# Additional Dependencies
+blinker>=1.7.0
+click>=8.1.7
+itsdangerous>=2.1.2
+Jinja2>=3.1.3
+MarkupSafe>=2.1.5
+urllib3>=2.2.0
+
+# Caching (optional but recommended)
+redis>=5.0.1
+flask-caching>=2.1.0

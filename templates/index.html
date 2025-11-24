@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recetas desde tu nevera</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.7.1/dist/bootstrap-tagsinput.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="container py-4">
+        <header class="text-center mb-5">
+            <img src="{{ url_for('static', filename='images/fridge.svg') }}" alt="Icono de nevera" class="mb-3">
+            <h1>Recetas desde tu nevera</h1>
+            <p class="lead">Sube fotos de los ingredientes en tu nevera y te sugeriremos recetas deliciosas</p>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form id="upload-form" enctype="multipart/form-data">
+                    <div class="drop-zone" id="drop-zone">
+                        <p class="mb-2">Arrastra tus fotos aquí o</p>
+                        <div class="btn-group">
+                            <input type="file" id="file-input" name="images" multiple accept="image/*" class="d-none">
+                            <button type="button" class="btn btn-secondary me-2" onclick="document.getElementById('file-input').click()">
+                                <i class="bi bi-file-earmark-image"></i> Seleccionar archivos
+                            </button>
+                            <button type="button" class="btn btn-secondary" id="camera-button">
+                                <i class="bi bi-camera"></i> Usar cámara
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="preview-container" class="preview-container"></div>
+
+                    <div class="form-group mb-3">
+                        <label for="cuisine-type">Tipo de cocina:</label>
+                        <select class="form-select" id="cuisine-type" name="cuisine_type">
+                            <option value="">Cualquier tipo</option>
+                            <option value="mexicana">Mexicana</option>
+                            <option value="italiana">Italiana</option>
+                            <option value="española">Española</option>
+                            <option value="mediterranea">Mediterránea</option>
+                            <option value="asiatica">Asiática</option>
+                            <option value="vegetariana">Vegetariana</option>
+                            <option value="tradicional">Tradicional</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="allergies">Alergias:</label>
+                        <input type="text" class="form-control" id="allergies" name="allergies" placeholder="Ej: lactosa, frutos secos" data-role="tagsinput">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="main-ingredients">Ingredientes principales:</label>
+                        <input type="text" class="form-control" id="main-ingredients" name="main_ingredients" placeholder="Ej: pollo, arroz, verduras" data-role="tagsinput">
+                    </div>
+
+                    <div class="form-group text-center mt-4">
+                        <label for="num-recipes" class="form-label">Número de recetas a generar:</label>
+                        <input type="number" min="1" max="3" value="1" class="form-control mx-auto" style="max-width: 100px;" id="num-recipes" name="num_recipes">
+                        <button type="submit" class="btn btn-primary mt-3" id="generateButton">
+                            Generar recetas
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Camera Modal -->
+                <div class="modal fade" id="cameraModal" tabindex="-1" aria-labelledby="cameraModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="cameraModalLabel">Tomar foto</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="camera-container">
+                                    <video id="camera-preview" autoplay playsinline></video>
+                                    <canvas id="camera-canvas" class="d-none"></canvas>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                <button type="button" class="btn btn-primary" id="capture-button">Capturar foto</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="loading-messages" class="loading-container" style="display: none;">
+                    <div class="spinner"></div>
+                    <p id="current-status">Escaneando los ingredientes de la nevera...</p>
+                </div>
+
+                <div id="ingredients-container" class="mt-4"></div>
+                <div id="recipe-container" class="mt-4 mb-5"></div>
+
+                <div id="loading-spinner" style="display: none;" class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-tagsinput@0.7.1/dist/bootstrap-tagsinput.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
